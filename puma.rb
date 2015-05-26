@@ -6,4 +6,5 @@ bind "tcp://0.0.0.0:#{ENV["PUMAPORT"] || 3000}"
 quiet
 tag 'tweet2vk'
 workers ENV["RAILS_WORKERS"] || 1
+daemonize
 preload_app!

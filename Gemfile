@@ -2,12 +2,10 @@ source 'https://rubygems.org'
 
 #Server
 gem 'rails', '4.2.1'
-gem 'thin'
+gem 'puma'
 
 #Database
-gem 'sqlite3' #Development
-#gem 'pg' #Test and Prod
-#gem "mongoid", "~> 4.0.0" #Keep original tweets and followers
+gem 'pg' 
 #gem 'redic' #Session Storage?
 
 gem 'sass-rails', '~> 5.0'
@@ -16,8 +14,9 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'haml-rails'
 
+gem 'bootstrap-sass', '~> 3.3.4'
 gem "font-awesome-sass"
-gem 'materialize-sass'
+gem 'bootstrap_form'
 
 gem 'omniauth'
 gem 'omniauth-twitter'
