@@ -1,5 +1,5 @@
 ---
-pid: 1566
+pid: 20260
 config: !ruby/object:Puma::Configuration
   options:
     :min_threads: 0
@@ -9,7 +9,7 @@ config: !ruby/object:Puma::Configuration
     :binds:
     - tcp://0.0.0.0:3000
     :workers: 1
-    :daemon: false
+    :daemon: true
     :worker_directory: "/git/tweet2vk"
     :config_file: puma.rb
     :mode: :http
@@ -23,4 +23,4 @@ config: !ruby/object:Puma::Configuration
     :redirect_append: true
     :tag: tweet2vk
     :preload_app: true
-    :control_auth_token: 3ff053a7d35a0ee4ff6c531b1595a2e
+    :control_auth_token: 2892709a3d978b3ff45a8c981fa6b25
