@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
 
-
+  # :nocov:
   private
   def twtr
     @twtr ||= Twitter::REST::Client.new do |config|
@@ -19,5 +19,6 @@ class ApplicationController < ActionController::Base
   def vklient
     @vklient = VkontakteApi::Client.new(ENV['APP_SECRET'])
   end
+  # :nocov:
 
 end

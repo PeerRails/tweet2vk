@@ -19,7 +19,14 @@
 require 'simplecov'
 require "omniauth"
 
-SimpleCov.start
+SimpleCov.start do
+  add_filter "/test/"
+  add_filter "/spec/"
+  add_filter "/fabricator/"
+
+  add_group "Models", "app/models"
+  add_group "Controllers", "app/controllers"
+end
 OmniAuth.config.test_mode = true
 OmniAuth.config.add_mock(:twitter, {:uid => '12345'})
 OmniAuth.config.add_mock(:vk, {:uid => '12345'})
