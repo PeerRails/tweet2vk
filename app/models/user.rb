@@ -19,4 +19,21 @@ class User < ActiveRecord::Base
     account.url = omni[:provider] == 'twitter' ? omni[:info][:urls]["Twitter"] : omni[:info][:urls]["VKontakte"]
     account.save
   end
+
+  def self.auth(omni)
+    account = Account.find_by(provider: omni[:provider], uid: omni[:uid])
+    user = User.new
+    if account.nil?
+      user = User.new(
+          omni: omni,
+          profile_img: omni[:info][:image],
+          full_name: omni[:info][:name]
+        )
+      user.save
+    else
+      user = User.find(account.user_id)
+    end
+    return user
+  end
+
 end
