@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   match '/auth/:provider/callback' => 'session#sign_in', via: [:get, :post]
   get 'sign_out' => 'session#logout'
 
+  get 'login' => 'home#login'
+
   root 'home#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
