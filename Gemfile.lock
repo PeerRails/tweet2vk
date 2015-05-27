@@ -82,6 +82,8 @@ GEM
     exception_handler (0.3.45)
     execjs (2.5.2)
     fabrication (2.13.2)
+    faker (1.4.3)
+      i18n (~> 0.5)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.9.1)
@@ -297,6 +299,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   exception_handler
   fabrication
+  faker
   figaro
   font-awesome-sass
   foreman

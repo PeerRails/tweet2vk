@@ -18,6 +18,7 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'simplecov'
 require "omniauth"
+require 'faker'
 
 SimpleCov.start do
   add_filter "/test/"
@@ -28,8 +29,105 @@ SimpleCov.start do
   add_group "Controllers", "app/controllers"
 end
 OmniAuth.config.test_mode = true
-OmniAuth.config.add_mock(:twitter, {:uid => '12345'})
-OmniAuth.config.add_mock(:vk, {:uid => '12345'})
+omni_twitter = {
+  :provider => "twitter",
+  :uid => "123456",
+  :info => {
+    :nickname => "johnqpublic",
+    :name => "John Q Public",
+    :location => "Anytown, USA",
+    :image => "http://si0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png",
+    :description => "a very normal guy.",
+    :urls => {
+      :Website => nil,
+      :Twitter => "https://twitter.com/johnqpublic"
+    }
+  },
+  :credentials => {
+    :token => "a1b2c3d4...", # The OAuth 2.0 access token
+    :secret => "abcdef1234"
+  },
+  :extra => {
+    :access_token => "", # An OAuth::AccessToken object
+    :raw_info => {
+      :name => "John Q Public",
+      :listed_count => 0,
+      :profile_sidebar_border_color => "181A1E",
+      :url => nil,
+      :lang => "en",
+      :statuses_count => 129,
+      :profile_image_url => "http://si0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png",
+      :profile_background_image_url_https => "https://twimg0-a.akamaihd.net/profile_background_images/229171796/pattern_036.gif",
+      :location => "Anytown, USA",
+      :time_zone => "Chicago",
+      :follow_request_sent => false,
+      :id => 123456,
+      :profile_background_tile => true,
+      :profile_sidebar_fill_color => "666666",
+      :followers_count => 1,
+      :default_profile_image => false,
+      :screen_name => "",
+      :following => false,
+      :utc_offset => -3600,
+      :verified => false,
+      :favourites_count => 0,
+      :profile_background_color => "1A1B1F",
+      :is_translator => false,
+      :friends_count => 1,
+      :notifications => false,
+      :geo_enabled => true,
+      :profile_background_image_url => "http://twimg0-a.akamaihd.net/profile_background_images/229171796/pattern_036.gif",
+      :protected => false,
+      :description => "a very normal guy.",
+      :profile_link_color => "2FC2EF",
+      :created_at => "Thu Jul 4 00:00:00 +0000 2013",
+      :id_str => "123456",
+      :profile_image_url_https => "https://si0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png",
+      :default_profile => false,
+      :profile_use_background_image => false,
+      :entities => {
+        :description => {
+          :urls => []
+        }
+      },
+      :profile_text_color => "666666",
+      :contributors_enabled => false
+    }
+  }
+}
+omni_vk = {"provider"=>"vkontakte",
+ "uid"=>"1",
+ "info"=>
+  {"name"=>"Павел Дуров",
+   "nickname"=>"",
+   "first_name"=>"Павел",
+   "last_name"=>"Дуров",
+   "image"=>"http://cs7001.vk.me/c7003/v7003079/374b/53lwetwOxD8.jpg",
+   "location"=>"Росiя, Санкт-Петербург",
+   "urls"=>{"Vkontakte"=>"http://vk.com/durov"}},
+ "credentials"=>
+  {"token"=>
+    "187041a618229fdaf16613e96e1caabc1e86e46bbfad228de41520e63fe45873684c365a14417289599f3",
+   "expires_at"=>1381826003,
+   "expires"=>true},
+ "extra"=>
+  {"raw_info"=>
+    {"id"=>1,
+     "first_name"=>"Павел",
+     "last_name"=>"Дуров",
+     "sex"=>2,
+     "nickname"=>"",
+     "screen_name"=>"durov",
+     "bdate"=>"10.10.1984",
+     "city"=>"2",
+     "country"=>"1",
+     "photo"=>"http://cs7001.vk.me/c7003/v7003079/374b/53lwetwOxD8.jpg",
+     "photo_big"=>"http://cs7001.vk.me/c7003/v7003736/3a08/mEqSflTauxA.jpg",
+     "online"=>1,
+     "online_app"=>"3140623",
+     "online_mobile"=>1}}}
+OmniAuth.config.add_mock(:twitter, omni_twitter)
+OmniAuth.config.add_mock(:vk, omni_vk)
 
 
 

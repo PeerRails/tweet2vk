@@ -19,6 +19,17 @@ class ApplicationController < ActionController::Base
   def vklient
     @vklient = VkontakteApi::Client.new(ENV['APP_SECRET'])
   end
+
+  private
+  def current_user
+    @current_user ||= User.select("users.*, sessions.ip, sessions.expires_at").joins(:sessions).where(sessions: {session_id: session[:session_id]}).last if session[:session_id].present?
+    if @current_user && @current_user.expires_at < DateTime.now
+      reset_session
+      @current_user = nil
+    end
+    return @current_user
+  end
+  helper_method :current_user
   # :nocov:
 
 end
