@@ -21,6 +21,13 @@ class ApplicationController < ActionController::Base
   end
 
   private
+  def auth
+    if current_user.nil?
+      redirect_to login_path(path: request.path)
+    end
+  end
+
+  private
   def current_user
     @current_user ||= User.select("users.*, sessions.ip, sessions.expires_at").joins(:sessions).where(sessions: {session_id: session[:session_id]}).last if session[:session_id].present?
     if @current_user && @current_user.expires_at < DateTime.now

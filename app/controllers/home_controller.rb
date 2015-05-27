@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  before_filter :auth, except: [:login, :index]
   #start page
   def index
   end
@@ -6,7 +7,7 @@ class HomeController < ApplicationController
   #login
   def login
     if !current_user
-      flash[:error] = "Ну и че ты как лошара"
+      flash[:error] = "Залогинься через Вк или Твиттер. Ты потом их объедини в настройках"
     end
   end
 
