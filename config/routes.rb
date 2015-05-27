@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   match '/auth/:provider/callback' => 'session#sign_in', via: [:get, :post]
-  get 'sign_out' => 'session#logout'
+  get 'sign_out' => 'session#sign_out'
 
   get 'login' => 'home#login'
 

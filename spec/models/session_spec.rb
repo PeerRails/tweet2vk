@@ -32,4 +32,9 @@ RSpec.describe Session, type: :model do
     expect(not_expired_sessions).to eq(4)
   end
 
+  it "checks if is expired" do
+    @session.expire
+    expect(@session.expired?).to be true
+  end
+
 end
