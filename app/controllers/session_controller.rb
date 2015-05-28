@@ -4,32 +4,21 @@ class SessionController < ApplicationController
     begin
       if current_user.nil?
         @omniauth = request.env['omniauth.auth']
-        user = User.auth(@omniauth)
+        user = User.auth(@omniauth, request.remote_ip)
         Session.create!(
+          session_id: session[:session_id],
           user_id: user.id,
           ip: request.remote_ip,
           expires_at: DateTime.now + 60
           )
-        res = {
-          message: "User signed in!",
-          name: user.full_name,
-          signed: true
-        }
+        flash[:success] = "Залогинены!"
       else
-        res = {
-          message: "User is already signed in!",
-          name: user.full_name,
-          signed: true
-        }
+        flash[:danger] = "Вы уже залогинены!"
       end
     rescue => e
-      res = {
-        message: "Something is broken!",
-        error: e,
-        signed: false
-      }
+      flash[:danger] = "А у нас тут ошибка сервера"
     end
-    render json: res
+    redirect_to root_url
   end
 
   def sign_out

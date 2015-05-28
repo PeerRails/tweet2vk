@@ -8,6 +8,9 @@ class HomeController < ApplicationController
   def login
     if !current_user
       flash[:error] = "Залогинься через Вк или Твиттер. Ты потом их объедини в настройках"
+    else
+      flash[:error] = "Вы уже залогинены!"
+      redirect_to root_url
     end
   end
 

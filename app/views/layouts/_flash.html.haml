@@ -1,7 +1,8 @@
-- flash.each do |key, value|
-  %div{:class => flash_class(key)}
-    = value
-    %button.close{"aria-label" => "Close", :type => "button", onclick: '$("#notifications").html("")'}
-      %span{"aria-hidden" => "true"}
-        %i.mdi-navigation-cancel
+#notifications
+  - flash.each do |key, value|
+    %div{:class => flash_class(key)}
+      = value
+      %button.close{"aria-label" => "Close", :type => "button", onclick: '$("#notifications").html("")'}
+        %span{"aria-hidden" => "true"}
+          %i.mdi-navigation-cancel
     

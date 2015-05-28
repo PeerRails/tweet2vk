@@ -27,6 +27,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def auth_json
+    if current_user.nil?
+      error = {error: 403, message: "Not Authorized"}
+      render json: error
+    end
+  end
+
   private
   def current_user
     @current_user ||= User.select("users.*, sessions.ip, sessions.expires_at").joins(:sessions).where(sessions: {session_id: session[:session_id]}).last if session[:session_id].present?
@@ -36,7 +43,19 @@ class ApplicationController < ActionController::Base
     end
     return @current_user
   end
-  helper_method :current_user
+
+  private
+  def vku
+    @vku ||= Account.find_by(user_id: current_user.id, provider: 'vk') if current_user
+    return @vku
+  end
+
+  private
+  def twu
+    @twu ||= Account.find_by(user_id: current_user.id, provider: 'twitter') if current_user
+    return @vku
+  end
+  helper_method :current_user, :vku, :twu
   # :nocov:
 
 end

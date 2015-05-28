@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'me' => 'user#me'
+
   match '/auth/:provider/callback' => 'session#sign_in', via: [:get, :post]
   get 'sign_out' => 'session#sign_out'
 
