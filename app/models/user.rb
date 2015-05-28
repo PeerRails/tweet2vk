@@ -16,18 +16,21 @@ class User < ActiveRecord::Base
         name: omni[:info][:name],
         user_id: self.id
       )
-    account.url = omni[:provider] == 'twitter' ? omni[:info][:urls]["Twitter"] : omni[:info][:urls]["VKontakte"]
+    account.url = omni[:provider] == 'twitter' ? omni[:info][:urls]["Twitter"] : omni[:info][:urls]["Vkontakte"]
     account.save
   end
 
-  def self.auth(omni)
+  #authenticate or create
+  def self.auth(omni, ip)
     account = Account.find_by(provider: omni[:provider], uid: omni[:uid])
     user = User.new
     if account.nil?
       user = User.new(
           omni: omni,
           profile_img: omni[:info][:image],
-          full_name: omni[:info][:name]
+          full_name: omni[:info][:name],
+          last_login: DateTime.now,
+          last_ip: ip
         )
       user.save
     else

@@ -25,16 +25,10 @@ RSpec.describe SessionController, type: :controller do
       expect(User.last.id).to eq(Session.last.user_id)
     end
 
-    #redirect was a mistake
-    it "should response with message" do
+    #ajax was a mistake
+    it "should redirect to root" do
       post :sign_in, provider: :twitter
-      exp_response = {
-        message: "User signed in!",
-        name: "John Q Public",
-        signed: true
-      }
-      res = JSON.parse(response.body)
-      expect(res["signed"]).to eql(exp_response[:signed])
+      expect(response).to redirect_to root_url
     end
     
   end
