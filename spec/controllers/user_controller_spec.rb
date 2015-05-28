@@ -40,4 +40,31 @@ RSpec.describe UserController, type: :controller do
 
   end
 
+  describe "#connect accounts to user" do
+    before do
+      request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:vk]
+      @omni = request.env['omniauth.auth']
+    end
+
+    it "should add vk account to user" do
+      user = Fabricate(:user)
+      session[:session_id] = "user_#{user.id}"
+      Session.create!(session_id: session[:session_id], user_id: user, expires_at: DateTime.now + 20)
+      post :connect, provider: :vk
+      expect( Account.where(user_id: user.id).count ).to eql(2)
+    end
+
+    it "should add twitter account to user" do
+      user = Fabricate.build(:user)
+      user.omni = @omni
+      user.save
+      session[:session_id] = "user_#{user.id}"
+      request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:twitter]
+      Session.create!(session_id: session[:session_id], user_id: user, expires_at: DateTime.now + 20)
+      post :connect, provider: :twitter
+      expect( Account.where(user_id: user.id).count ).to eql(2)
+    end
+
+  end
+
 end

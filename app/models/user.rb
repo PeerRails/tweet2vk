@@ -5,8 +5,7 @@ class User < ActiveRecord::Base
   after_create :add_account
   validates :omni, presence: true
 
-  def add_account
-    omni = self.omni
+  def add_account(omni=self.omni)
     account = Account.new(
         provider: omni[:provider],
         uid: omni[:uid],

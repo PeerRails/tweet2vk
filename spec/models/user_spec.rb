@@ -8,14 +8,14 @@ RSpec.describe User, type: :model do
 
   it "should create new user" do
     expect {
-      user = User.auth(@omni)
+      user = User.auth(@omni, Faker::Internet.ip_v4_address)
       }.to change{ User.count }.by(1)
   end
 
   it "should update user" do
     user = Fabricate(:user)
     @omni[:info][:name] = 'John'
-    updated_user = User.auth(@omni)
+    updated_user = User.auth(@omni, Faker::Internet.ip_v4_address)
     expect(updated_user.id).to eq(user.id)
   end
 
@@ -36,5 +36,13 @@ RSpec.describe User, type: :model do
     @user.save
     expect(@user.id).to eq(nil)
   end
+
+  it "should add account" do
+    user = Fabricate(:user)
+    omni = OmniAuth.config.mock_auth[:vk]
+    user.add_account(omni)
+    expect(Account.where(user_id: user.id).count).to eql(2)
+  end
+
 
 end
