@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
-#Server
+# Server
 gem 'rails', '4.2.1'
 gem 'puma'
 
-#Database
+# Database
 gem 'pg' 
-#gem 'redic' #Session Storage?
+# gem 'redic' #Session Storage?
 
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -28,21 +28,21 @@ gem 'cancancan', '~> 1.10'
 
 gem "figaro"
 
-#gem "lol_dba"
+# gem "lol_dba"
 
 gem 'exception_handler'
 
-#debug
+# debug
 group :development, :test do
   gem 'rails-footnotes'
-  gem 'quiet_assets'
+  gem 'quiet_assets', require: false
   gem 'better_errors'
   gem "binding_of_caller"
   gem 'foreman', require: false
-  #gem 'pghero'
+# gem 'pghero'
 end
 
-#testing
+# testing
 group :test, :development do
   gem 'rspec'
   gem 'listen', '~> 2.7'
@@ -52,7 +52,7 @@ group :test, :development do
   gem 'rspec-rails', '~> 3.0'
   gem 'shoulda-matchers'
   gem 'simplecov'
-  gem 'brakeman'
+  gem 'brakeman', require: false
   gem 'faker'
 end
 

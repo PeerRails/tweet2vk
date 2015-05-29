@@ -2,8 +2,8 @@ class SessionController < ApplicationController
   def sign_in
     #Why exception? Because I dont really know what can go wrong
     begin
-      if current_user.nil?
-        @omniauth = request.env['omniauth.auth']
+      @omniauth = request.env['omniauth.auth']
+      unless signed_in?
         user = User.auth(@omniauth, request.remote_ip)
         Session.create!(
           session_id: session[:session_id],
@@ -13,7 +13,13 @@ class SessionController < ApplicationController
           )
         flash[:success] = "Залогинены!"
       else
-        flash[:danger] = "Вы уже залогинены!"
+        @account = Account.find_by(uid: @omniauth[:uid], provider: @omniauth[:provicer])
+        if @account.nil?
+          user.add_account(@omniauth)
+        else
+          @account.update_info(@omniauth)
+        end
+        flash[:success] = "Добавлена новая авторизация!"
       end
     rescue => e
       flash[:danger] = "А у нас тут ошибка сервера"
@@ -22,7 +28,7 @@ class SessionController < ApplicationController
   end
 
   def sign_out
-    if current_user
+    if signed_in?
       @session = Session.find_by(session_id: session[:session_id])
       reset_session
       @session.expire

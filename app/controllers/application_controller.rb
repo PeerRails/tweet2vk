@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
 
   # :nocov:
-  private
+
   def twtr
     @twtr ||= Twitter::REST::Client.new do |config|
       config.consumer_key = ENV['CONSUMER_KEY']
@@ -15,12 +15,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  private
   def vklient
     @vklient = VkontakteApi::Client.new(ENV['APP_SECRET'])
   end
 
-  private
   def auth
     if current_user.nil?
       redirect_to login_path(path: request.path)
@@ -34,7 +32,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  private
   def current_user
     @current_user ||= User.select("users.*, sessions.ip, sessions.expires_at").joins(:sessions).where(sessions: {session_id: session[:session_id]}).last if session[:session_id].present?
     if @current_user && @current_user.expires_at < DateTime.now
@@ -44,18 +41,22 @@ class ApplicationController < ActionController::Base
     return @current_user
   end
 
-  private
   def vku
     @vku ||= Account.find_by(user_id: current_user.id, provider: 'vk') if current_user
     return @vku
   end
 
-  private
   def twu
     @twu ||= Account.find_by(user_id: current_user.id, provider: 'twitter') if current_user
     return @vku
   end
-  helper_method :current_user, :vku, :twu
+
+  def signed_in?
+    !!current_user
+  end
+
+  helper_method :current_user, :vku, :twu, :signed_in?
+  protected :twtr, :vklient, :auth, :auth_json, :current_user, :vku, :twu, :signed_in?
   # :nocov:
 
 end

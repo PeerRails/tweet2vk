@@ -2,11 +2,10 @@ require 'rails_helper'
 
 RSpec.describe SessionController, type: :controller do
 
-  before do
-    request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:twitter]
-  end
-
   describe '#sign_in with twitter' do
+    before do
+      request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:twitter]
+    end
 
     it "should create new user" do
       expect{
@@ -31,6 +30,60 @@ RSpec.describe SessionController, type: :controller do
       expect(response).to redirect_to root_url
     end
     
+  end
+
+  describe '#sign_in with vk' do
+    before do
+      request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:vk]
+    end
+
+    it "should create new user" do
+      expect{
+        post :sign_in, provider: :vk
+        }.to change{ User.count }.by(1)
+    end
+
+    it "should create new account" do
+      post :sign_in, provider: :vk
+      omni = request.env['omniauth.auth']
+      expect(Account.last.uid).to eq(omni[:uid].to_i)
+    end
+
+    it "should create new session" do
+      post :sign_in, provider: :vk
+      expect(User.last.id).to eq(Session.last.user_id)
+    end
+
+    #ajax was a mistake
+    it "should redirect to root" do
+      post :sign_in, provider: :vk
+      expect(response).to redirect_to root_url
+    end
+    
+  end
+
+  describe "#sign_in with two accounts" do
+    before do
+      session[:session_id] = "MultipleAccounts"
+    end
+    
+    it "auth with twitter first" do
+      request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:twitter]
+      omni = request.env['omniauth.auth']
+      post :sign_in, provider: :twitter
+      @user = User.last
+      @account = Account.last
+      expect(Account.last.uid).to eq(omni[:uid].to_i)
+    end
+
+    it "should auth with vk then" do
+      request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:vk]
+      omni = request.env['omniauth.auth']
+      allow(controller).to receive(:current_user).and_return(@user)
+      post :sign_in, provider: :vk
+      expect(Account.last.uid).to eq(omni[:uid].to_i)
+    end
+
   end
 
   describe "#sign_out with twitter" do
