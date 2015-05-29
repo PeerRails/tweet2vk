@@ -3,7 +3,11 @@
     .col-md-6.col-md-offset-3
       .text-center
         %h3 Войди в меня
-        %a.btn.btn-flat.btn-material-indigo-A700#sign-vk{"data-provider" => "vk", :href => "/auth/vk"}
-          %i.fa.fa-vk.fa-2x
-        %a.btn.btn-flat.btn-info#sign-twitter{"data-provider" => "twitter", :href => "/auth/twitter"}
-          %i.fa.fa-twitter.fa-2x
+        - if vku.nil?
+          %a.btn.btn-flat.btn-material-indigo-A700#sign-vk{"data-provider" => "vk", :href => "/auth/vkontakte"}
+            %i.fa.fa-vk.fa-2x
+        - if twu.nil?
+          %a.btn.btn-flat.btn-info#sign-twitter{"data-provider" => "twitter", :href => "/auth/twitter"}
+            %i.fa.fa-twitter.fa-2x
+        - if twu && vku
+          %b А вы авторизированы в обеих системах!

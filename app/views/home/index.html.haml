@@ -7,9 +7,6 @@
           = current_user.full_name
         .accounts
           %h2 Ваши данные
-          - if vku
-            %b= vku.id 
-          - if twu
-            %b= twu.id 
+          #UserInfo
     - else
       %h1 wat

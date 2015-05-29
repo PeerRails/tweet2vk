@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   end
 
   def auth
-    if current_user.nil?
+    unless signed_in?
       redirect_to login_path(path: request.path)
     end
   end
@@ -42,13 +42,13 @@ class ApplicationController < ActionController::Base
   end
 
   def vku
-    @vku ||= Account.find_by(user_id: current_user.id, provider: 'vk') if current_user
+    @vku ||= Account.find_by(user_id: current_user.id, provider: 'vkontakte') if signed_in?
     return @vku
   end
 
   def twu
-    @twu ||= Account.find_by(user_id: current_user.id, provider: 'twitter') if current_user
-    return @vku
+    @twu ||= Account.find_by(user_id: current_user.id, provider: 'twitter') if signed_in?
+    return @twu
   end
 
   def signed_in?

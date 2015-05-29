@@ -15,13 +15,14 @@ class SessionController < ApplicationController
       else
         @account = Account.find_by(uid: @omniauth[:uid], provider: @omniauth[:provicer])
         if @account.nil?
-          user.add_account(@omniauth)
+          current_user.add_account(@omniauth)
         else
           @account.update_info(@omniauth)
         end
         flash[:success] = "Добавлена новая авторизация!"
       end
     rescue => e
+      logger.debug e
       flash[:danger] = "А у нас тут ошибка сервера"
     end
     redirect_to root_url
