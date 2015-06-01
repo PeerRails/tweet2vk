@@ -34,6 +34,8 @@ class User < ActiveRecord::Base
       user.save
     else
       user = User.find(account.user_id)
+      user.last_ip = ip
+      user.last_login = DateTime.now
     end
     return user
   end

@@ -10,13 +10,13 @@ class ApplicationController < ActionController::Base
     @twtr ||= Twitter::REST::Client.new do |config|
       config.consumer_key = ENV['CONSUMER_KEY']
       config.consumer_secret = ENV['CONSUMER_SECRET']
-      config.access_token = ENV['ACCESS_TOKEN']
-      config.access_token_secret = ENV['ACCESS_TOKEN_SECRET']
+      config.access_token = twu.token
+      config.access_token_secret = twu.secret
     end
   end
 
   def vklient
-    @vklient = VkontakteApi::Client.new(ENV['APP_SECRET'])
+    @vklient = VkontakteApi::Client.new(vku.token)
   end
 
   def auth

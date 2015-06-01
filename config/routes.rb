@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  get 'groups/list'
+
+  get 'groups/info'
+
+  get 'groups/wall'
+
+  get 'groups/wall_post'
+
   get 'me' => 'user#me'
 
   match '/auth/:provider/callback' => 'session#sign_in', via: [:get, :post]
