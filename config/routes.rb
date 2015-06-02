@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'tweets/last'
+
+  get 'tweets/show'
+
   get 'groups/list'
 
   get 'groups/info'
