@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def auth_json
-    if current_user.nil?
+    unless signed_in?
       error = {error: 403, message: "Not Authorized"}
       render json: error
     end

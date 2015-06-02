@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_filter :auth
+  before_filter :auth_json
 
   def list
 
