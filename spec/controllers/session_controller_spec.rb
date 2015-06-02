@@ -89,8 +89,9 @@ RSpec.describe SessionController, type: :controller do
   describe "#sign_out with twitter" do
     before do
       session[:session_id] = "MySession"
+      @current_user = Fabricate(:user)
       @current_session = Session.create!(session_id: session[:session_id], user_id: @current_user, expires_at: DateTime.now + 20)
-      allow(controller).to receive(:current_user).and_return(Fabricate(:user))
+      allow(controller).to receive(:current_user).and_return(@current_user)
     end
 
     it "redirects to root url" do

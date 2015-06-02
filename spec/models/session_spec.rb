@@ -29,7 +29,7 @@ RSpec.describe Session, type: :model do
   it "can expire" do
     @session.expire
     not_expired_sessions = Session.where(user_id: @user.id).not_expired.count
-    expect(not_expired_sessions).to eq(4)
+    expect(not_expired_sessions).to eq(1)
   end
 
   it "checks if is expired" do

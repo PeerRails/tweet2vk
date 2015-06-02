@@ -5,5 +5,5 @@ Fabricator(:user) do
   email { Faker::Internet.email }
   profile_img { Faker::Internet.url }
   omni { OmniAuth.config.mock_auth[:twitter] }
-  sessions(count: 5)
+  sessions(count: 2)
 end

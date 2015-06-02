@@ -3,9 +3,10 @@ require 'rails_helper'
 RSpec.describe GroupsController, type: :controller do
 
   describe "GET #list" do
-    before do
-      
+    before do(:each)
+
     end
+
     it "returns users groups" do
       get :list
       expect(response).to have_http_status(:success)
