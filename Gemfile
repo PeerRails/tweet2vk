@@ -46,7 +46,6 @@ end
 group :test, :development do
   gem 'rspec'
   gem 'listen', '~> 2.7'
-  gem 'webmock'
   #gem 'certified', require: false  
   gem 'fabrication'
   #gem 'mocha'

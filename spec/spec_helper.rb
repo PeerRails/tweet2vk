@@ -19,8 +19,6 @@
 require 'simplecov'
 require "omniauth"
 require 'faker'
-require 'webmock/rspec'
-WebMock.disable_net_connect!(allow_localhost: true)
 
 SimpleCov.start do
   add_filter "/test/"

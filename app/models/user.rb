@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
         name: omni[:info][:name],
         user_id: self.id
       )
+    account.secret = omni[:credentials][:secret] unless omni[:credentials][:secret].nil?
     account.url = omni[:provider] == 'twitter' ? omni[:info][:urls]["Twitter"] : omni[:info][:urls]["Vkontakte"]
     account.save
   end
@@ -36,6 +37,7 @@ class User < ActiveRecord::Base
       user = User.find(account.user_id)
       user.last_ip = ip
       user.last_login = DateTime.now
+      account.update_info(omni)
     end
     return user
   end

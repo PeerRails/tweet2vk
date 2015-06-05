@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150527073314) do
+ActiveRecord::Schema.define(version: 20150605121652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,13 +21,14 @@ ActiveRecord::Schema.define(version: 20150527073314) do
     t.integer  "user_id"
     t.string   "name"
     t.string   "nickname"
-    t.integer  "uid"
+    t.string   "uid"
     t.string   "url"
     t.string   "token"
     t.string   "secret"
     t.string   "profile_img_url"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "profile_img_small"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
@@ -35,7 +36,7 @@ ActiveRecord::Schema.define(version: 20150527073314) do
   create_table "sessions", force: :cascade do |t|
     t.integer  "user_id"
     t.inet     "ip"
-    t.datetime "expires_at"
+    t.date     "expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "session_id"
@@ -47,7 +48,7 @@ ActiveRecord::Schema.define(version: 20150527073314) do
   create_table "users", force: :cascade do |t|
     t.string   "full_name"
     t.inet     "last_ip"
-    t.datetime "last_login"
+    t.date     "last_login"
     t.string   "email"
     t.string   "profile_img"
     t.datetime "created_at",  null: false
